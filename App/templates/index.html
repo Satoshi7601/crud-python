@@ -1,0 +1,102 @@
+
+{% extends 'base.html' %}
+
+
+{% block conteudo  %}
+<div class='Conteudo'>
+    <div class="container" style='margin-top:1%;'>
+        <div class="header">
+          <span>Cadastro de Cidades</span>
+          <button onclick="openModal()" id="new">Incluir</i></button>
+        </div>
+        <div class="divTable" >
+            <table>
+              <thead>
+                <tr>
+                  <th>Codigo Cidade</th>
+                  <th>Nome cidade</th>
+                  <th>Estado</th>
+                  <th class="acao">Editar</th>
+                  <th class="acao">Excluir</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for documento in documentos %}
+                
+                <tr>
+                  <td id="codigo-{{ documento['_id'] }}">{{ documento['m-codigo'] }}</td>
+                  <td id="cidade-{{ documento['_id'] }}">{{ documento['m-Cidade'] }}</td>
+                  <td id="estado-{{ documento['_id'] }}">{{ documento['m-Estado'] }}</td>
+                  <td>
+                    <button onclick="updateValues('{{ documento['_id'] }}')"><i class='bx bx-edit' ></i></button>
+                  </td>
+                  <td>
+                    <form method="POST" action="/excluir/{{ documento['_id'] }}">
+                      <input type="hidden" name="documento_id" value="{{ documento['_id'] }}">
+                      <button type="submit" class="btn-excluir"><i class='bx bx-trash'></i></button>
+                    </form>           
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="modal-container">
+            <div class="modal">
+              <form method="POST" action="/cadastro">
+
+                <label for="m-codigo">Codigo</label>
+                <input id="m-codigo" type="text" name='m-codigo' required />
+        
+                <label for="m-Cidade">Nome da cidade</label>
+                <input id="m-Cidade" type="text" name='m-Cidade'  required />
+        
+                <label for="m-Estado">Estado</label>
+                <input id="m-Estado" type="text" name='m-Estado' required />
+
+                <button type="submit" value="Cadastrar">Salvar</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="modal-container-Edit">
+            <div class="edit-modal">
+            <div id="edit-modal" class="edit-modal"  >
+              
+              <form onsubmit="submitEditForm(event)">
+                <input type="hidden" name="document_id" id="edit-document-id">
+
+                <label for="edit-codigo">Codigo</label>
+                <input id="edit-codigo" type="text" name='m-codigo' required />
+        
+                <label for="edit-cidade">Nome da cidade</label>
+                <input id="edit-cidade" type="text" name='m-Cidade'  required />
+        
+                <label for="edit-estado">Estado</label>
+                <input id="edit-estado" type="text" name='m-Estado' required />
+                
+               
+                <button action='/update/' type="submit">Save</button>
+
+                
+              </form>
+            
+              </div>
+              
+            </div>
+          </div>  
+      
+        </div>
+      </div>
+      <footer id="sticky-footer" class="flex-shrink-0 py-4 bg-dark text-white-50" style='margin-top: 25%; height:128px;' >
+        <div class="container text-center" style="
+        background: #212529;
+        color: wheat;
+        line-height: 65px">
+              <P style='font-size: 100%;
+              font-weight: 500;'>Copyright © Your Website</P>
+            
+    
+    </div>
+{% endblock %}
